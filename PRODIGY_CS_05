@@ -1,0 +1,21 @@
+from scapy.all import sniff
+from scapy.layers.inet import IP, TCP, UDP
+def process_packet(packet):
+    if packet.haslayer(IP):  
+        ip_layer = packet.getlayer(IP)  
+        protocol = None
+        if packet.haslayer(TCP):
+            protocol = "TCP"
+        elif packet.haslayer(UDP): 
+            protocol = "UDP"
+        else:
+            protocol = ip_layer.proto  
+        print(f"Source: {ip_layer.src} -> Destination: {ip_layer.dst} | Protocol: {protocol} | Length: {len(packet)}")
+        if protocol in ["TCP", "UDP"]:
+            payload = bytes(packet[IP].payload).decode('utf-8', errors='ignore')
+            print(f"Payload: {payload}\n")
+def start_sniffing(interface=None):
+    sniff(iface=interface, prn=process_packet, store=False)
+if __name__ == "__main__":
+    print("Starting packet sniffer...")
+    start_sniffing()  
