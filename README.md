@@ -1,5 +1,5 @@
 # Packet Sniffer using Scapy    
-         
+          
 This project is a simple packet sniffer built using Python and the **Scapy** library. It captures network packets, extracts key information such as source and destination IP addresses, protocol type (TCP/UDP), packet length, and payload data.  
  
 ## Features  
